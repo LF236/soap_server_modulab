@@ -9,9 +9,12 @@ const body_parser_1 = __importDefault(require("body-parser"));
 const fs_1 = __importDefault(require("fs"));
 const https_1 = require("https");
 const modulab_1 = __importDefault(require("../routes/modulab"));
+const poservice_1 = __importDefault(require("../services/poservice"));
+const soap = require('soap');
 class Servidor {
     constructor() {
         this.app = (0, express_1.default)();
+        // this.soapServer = new Server();
         this.port = parseInt(`${process.env.PORT}`);
         this.server = process.env.ENVIRONMENT == 'productivo'
             ? (0, https_1.createServer)({
@@ -30,6 +33,9 @@ class Servidor {
             process.env.ENVIRONMENT == 'productivo'
                 ? console.log(`Server Settings ready in https://modulab.ssaver.gob.mx:${this.port}`.america)
                 : console.log(`Server Settings ready in http://localhost:${this.port}`.rainbow);
+        });
+        // console.log( soap );
+        soap.listen(this.server, '/sayHello', poservice_1.default.service, poservice_1.default.xml, (e) => {
         });
     }
 }

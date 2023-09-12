@@ -6,13 +6,18 @@ import fs from 'fs';
 import { createServer } from 'https';
 import modulabRouter from '../routes/modulab';
 
+import poservice from '../services/poservice';
+const soap = require( 'soap' );
+
 class Servidor {
     private app: Express;
     private server: any;
     public port: number;
+    private soapServer: any;
 
     constructor() {
         this.app = express();
+        // this.soapServer = new Server();
         this.port = parseInt( `${ process.env.PORT }` );
         this.server = process.env.ENVIRONMENT == 'productivo'
             ? createServer(
@@ -36,6 +41,10 @@ class Servidor {
                 ? console.log( `Server Settings ready in https://modulab.ssaver.gob.mx:${ this.port }`.america )
                 : console.log( `Server Settings ready in http://localhost:${ this.port }`.rainbow );
         } );
+        // console.log( soap );
+        soap.listen( this.server, '/sayHello', poservice.service, poservice.xml, ( e: any ) => {
+            
+        } )
     }
 }
 
