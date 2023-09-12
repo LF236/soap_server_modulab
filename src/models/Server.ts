@@ -7,6 +7,7 @@ import { createServer } from 'https';
 import modulabRouter from '../routes/modulab';
 
 import poservice from '../services/poservice';
+import saveLabsService from '../services/saveLabsService';
 const soap = require( 'soap' );
 
 class Servidor {
@@ -45,6 +46,11 @@ class Servidor {
         soap.listen( this.server, '/sayHello', poservice.service, poservice.xml, ( e: any ) => {
             
         } )
+
+        soap.listen( this.server, '/saveLabs', saveLabsService.service, saveLabsService.xml, ( e: any ) => {
+            
+        } )
+        
     }
 }
 

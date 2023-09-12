@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- <definitions> must be the root of the WSDL document -->
+<wsdl:definitions targetNamespace="http://tempuri.org/"
+    xmlns:s="http://www.w3.org/2001/XMLSchema"
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+    xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+    xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+    xmlns:tns="http://tempuri.org/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+    xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+
+    <!-- WSDL TYPES: READFILE_64 -->
+    <wsdl:types>
+        <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+            <s:element name="SaveLabsRequest">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="1" maxOccurs="1" name="image" type="s:string" />
+                        <s:element minOccurs="1" maxOccurs="1" name="id_paciente" type="s:string" />
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+
+            <s:element name="SaveLabsResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="1" maxOccurs="unbounded" name="result" type="s:string" />
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+        </s:schema>
+    </wsdl:types>
+
+    <!-- MESSAGES: READFILE_64 -->
+    <wsdl:message name="SaveLabsSoapIn">
+        <wsdl:part name="parameters" element="tns:SaveLabsRequest" />
+    </wsdl:message>
+    <wsdl:message name="SaveLabsSoapOut">
+        <wsdl:part name="parameters" element="tns:SaveLabsResponse" />
+    </wsdl:message>
+
+    <!-- PORT TYPES: defines the complete communication operation (one way/round trip) -->
+    <wsdl:portType name="SaveLabsSoapPort">
+        <!-- The operation name must be the same as the one specified in the service object -->
+        <wsdl:operation name="SaveLabs">
+            <wsdl:input message="tns:SaveLabsSoapIn" />
+            <wsdl:output message="tns:SaveLabsSoapOut" />
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <wsdl:binding name="SaveLabsServiceSoapBinding" type="tns:SaveLabsSoapPort">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="SaveLabs">
+			<soap:operation soapAction="SaveLabs" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+
+    <wsdl:binding name="SaveLabsServiceSoap12Binding" type="tns:SaveLabsSoapPort">
+		<soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="SaveLabs">
+			<soap12:operation soapAction="SaveLabs" style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+
+    <wsdl:service name="SaveLabsService">
+        <wsdl:port name="SaveLabsServiceSoapPort"
+            binding="tns:SaveLabsServiceSoapBinding">
+            <soap:address location="http://localhost:3233/saveLabs" />
+        </wsdl:port>
+        <wsdl:port name="SaveLabsServiceSoap12Port"
+            binding="tns:SaveLabsServiceSoap12Binding">
+            <soap12:address location="http://localhost:3233/saveLabs" />
+        </wsdl:port>
+    </wsdl:service>
+
+
+</wsdl:definitions>

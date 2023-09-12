@@ -10,6 +10,7 @@ const fs_1 = __importDefault(require("fs"));
 const https_1 = require("https");
 const modulab_1 = __importDefault(require("../routes/modulab"));
 const poservice_1 = __importDefault(require("../services/poservice"));
+const saveLabsService_1 = __importDefault(require("../services/saveLabsService"));
 const soap = require('soap');
 class Servidor {
     constructor() {
@@ -36,6 +37,8 @@ class Servidor {
         });
         // console.log( soap );
         soap.listen(this.server, '/sayHello', poservice_1.default.service, poservice_1.default.xml, (e) => {
+        });
+        soap.listen(this.server, '/saveLabs', saveLabsService_1.default.service, saveLabsService_1.default.xml, (e) => {
         });
     }
 }
